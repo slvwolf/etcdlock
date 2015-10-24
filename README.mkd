@@ -1,0 +1,38 @@
+# EtcdLock
+
+* Dependencies: python-etcd
+* Requires Python 3.5
+
+## Command line usage
+
+    Command line lock using Etcd
+
+    positional arguments:
+      cmd
+
+    optional arguments:
+      -h, --help           show this help message and exit
+      --key KEY            Key used for lock (Default: /lock/default)
+      --id ID              Client id for the lock. This should be unique
+                           for each client (Default: generated)
+      --host HOST          Etcd server host (Default: 127.0.0.1)
+      --port PORT          Etcd server port (Default: 4001)
+      --protocol PROTOCOL  Etcd server protocol (Default: http)
+
+## Usage in Python
+
+    lock = EtcdLock("/locks/my_lock", "client_id")
+    lock.acquire()
+    ...
+    lock.release()
+
+    # Or
+
+    with EtcdLock("/locks/my_lock", "client_id"):
+        ...
+
+## Known limitation
+
+* If lock is forcefully changed the original acquirer will get an exception when releasing the lock
+* Client id can not be shared with different processes without side-effects
+* Killing etcdlock during execution might leave the lock in a locked state. However, same client id can still access the lock.
