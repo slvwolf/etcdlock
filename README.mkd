@@ -19,6 +19,11 @@
       --port PORT          Etcd server port (Default: 4001)
       --protocol PROTOCOL  Etcd server protocol (Default: http)
 
+Example:
+
+    etcdlock --key /some/key/here --id someid sleep 10 &
+    etcdlock --key /some/key/here --id anotherid ls
+
 ## Usage in Python
 
     lock = EtcdLock("/locks/my_lock", "client_id")
